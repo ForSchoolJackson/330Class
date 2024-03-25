@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>First Canvas</title>
+    <style>
+        canvas {
+            border: 1px solid gray;
+        }
+    </style>
+    <script>
+        "use strict";
+
+        //global variable
+        let ctx;
+
+        //call init after page loads
+        window.onload = init;
+
+        function init() {
+            // make canvas
+            let canvas = document.querySelector("canvas");
+            ctx = canvas.getContext("2d");
+            //color
+            ctx.fillStyle = "#a8ffe6";
+            //fill rectangle
+            ctx.fillRect(0, 0, 640, 480);
+
+            //call the update function
+            update();
+        }
+
+        //update the animation 
+        function update() {
+            window.requestAnimationFrame(update)
+            //radomixe which one drawn
+            if (getRandomInt(1, 10) == 1) {
+                //draw rects
+              drawRandomRect(ctx);
+
+            } else {
+                //craw circle
+                drawRandomCirle(ctx)
+            }
+
+        }
+
+        //make random rectangles
+        function drawRandomRect(ctx) {
+            ctx.fillStyle = getRandomColor(40, "rand", "rand", .8);
+            ctx.strokeStyle ="black"
+            ctx.lineWidth = getRandomInt(2, 3);
+            ctx.beginPath();
+            ctx.rect(getRandomInt(-100, 620), getRandomInt(-10, 460), getRandomInt(100, 300), getRandomInt(10, 30));
+            ctx.closePath();
+            ctx.fill();
+            ctx.stroke();
+        }
+
+        //makes random circle
+        function drawRandomCirle(ctx) {
+            ctx.fillStyle = getRandomColor(240, "rand", "rand", .2);
+            ctx.beginPath();
+            ctx.arc(getRandomInt(20, 620), getRandomInt(20, 460), getRandomInt(0, 20), 0, Math.PI * 2, false);
+            ctx.closePath();
+            ctx.fill();
+
+        }
+
+        // handy helper functions!
+        function getRandomColor(r, g, b, a) {
+            function getByte() {
+                return 50 + Math.round(Math.random() * 200);
+            }
+
+            if (r == "rand") {
+                r = getByte();
+            } if (g == "rand") {
+                g = getByte();
+            } if (b == "rand") {
+                b = getByte();
+            } if (a == "rand") {
+                a = getByte();
+            }
+            return "rgba(" + r + "," + g + "," + b + "," + a + ")";
+        }
+
+        function getRandomInt(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+    </script>
+</head>
+
+<body>
+    <canvas width="640" height="480">
+        Get a real browser!
+    </canvas>
+</body>
+
+</html>

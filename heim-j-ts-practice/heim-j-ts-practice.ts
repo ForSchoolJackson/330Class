@@ -5,31 +5,31 @@
   Then strongly type the `todoItems` array
 */
 
-interface Todo{
-    id:number
-    title:string
-    status: TodoStatus
-    completedOn?: Date
-
-}
-
 /*
   #2 - Strongly type the `status` property with an enum
   Note the `status` values below: "done", "in-progess" etc
 */
-
-enum TodoStatus{
-    Todo = "tofo",
-    InProgress = "in-progress",
-    Done = "done"
-
-}
 
 /*
   #3 - Strongly type the parameters and return values of `addTodoItem()` and `getNextId()`
 */
 
 // **When you are done, there must not be any errors under the Playground's "Errors" tab**
+
+interface Todo{
+  id:number
+  title:string
+  status: TodoStatus
+  completedOn?: Date
+
+}
+
+enum TodoStatus{
+  Todo = "tofo",
+  InProgress = "in-progress",
+  Done = "done"
+
+}
 
 const todoItems: Todo[] = [
     { id: 1, title: "Learn HTML", status: TodoStatus.Done, completedOn: new Date("2021-09-11") },

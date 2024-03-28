@@ -14,7 +14,7 @@ function loadPOI(){
 
         //make markers and add
         for(let p of poi){
-            map.addMarker(p.coordinates, p.title, "A POI!", "marker")
+            map.addMarker(p.coordinates, p.title, "A POI!", "poi")
         }
     }
 

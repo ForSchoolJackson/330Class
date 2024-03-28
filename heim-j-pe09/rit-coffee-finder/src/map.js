@@ -73,18 +73,8 @@ function addMarkersToMap() {
     // add markers to map
     for (const feature of geojson.features) {
         // create a HTML element for each feature
+        addMarker(feature.geometry.coordinates, feature.properties.title, feature.properties.description, 'marker')
         const el = document.createElement('div');
-        el.className = 'marker';
-
-        new mapboxgl.Marker(el)
-            .setLngLat(feature.geometry.coordinates)
-            .setPopup(
-                new mapboxgl.Popup({ offset: 25 }) // add popups
-                    .setHTML(
-                        `<h3>${feature.properties.title}</h3><p>${feature.properties.description}</p>`
-                    )
-            )
-            .addTo(map);
 
         // make a marker for each feature and add to the map
         new mapboxgl.Marker(el).setLngLat(feature.geometry.coordinates).addTo(map);
@@ -211,17 +201,15 @@ function setPitchAndBearing(pitch = 0, bearing = 0) {
     map.setBearing(bearing);
 }
 
-function addMarker(coordinates, title, description, className){
+function addMarker(coordinates, title, description, className) {
     let el = document.createElement('div');
     el.className = className;
 
     new mapboxgl.Marker(el)
-    .setLngLat(coordinates)
-    .setPopup(new mapboxgl.Popup({offset: 25}) //add popups
-    .setHTML('<h3>' + title + '</h3><p>' + description + '</p>'))
-    .addTo(map)
+        .setLngLat(coordinates)
+        .setPopup(new mapboxgl.Popup({ offset: 25 }) //add popups
+            .setHTML('<h3>' + title + '</h3><p>' + description + '</p>'))
+        .addTo(map)
 }
-
-
 
 export { initMap, loadMarkers, addMarkersToMap, flyTo, setZoomLevel, setPitchAndBearing, addMarker };

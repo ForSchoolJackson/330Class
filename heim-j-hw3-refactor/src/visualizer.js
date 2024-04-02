@@ -33,7 +33,7 @@ const setupCanvas = (canvasElement, analyserNodeRef) => {
     triangles.push(new triangle.Triangle(40, 490, 20))
     triangles.push(new triangle.Triangle(70, 520, 20))
 
-    console.log(triangles)
+    //console.log(triangles)
 }
 
 const draw = (params = {}) => {

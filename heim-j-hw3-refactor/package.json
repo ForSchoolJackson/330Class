@@ -1,7 +1,6 @@
 {
   "name": "heim-j-hw2",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
     "start": "npm run webpack",
@@ -13,5 +12,6 @@
   "devDependencies": {
     "webpack": "^5.91.0",
     "webpack-cli": "^5.1.4"
-  }
+  },
+  "description": ""
 }

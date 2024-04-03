@@ -11,6 +11,26 @@
 
 <body>
   <main>
+    <nav class="navbar has-shadow is-white">
+      <div class="navbar-brand">
+          <a class="navbar-item">
+              <img src="media/icons/note-icon.png" alt="site logo" style="max-height:70px" class="py-2 px-2">
+          </a>
+          <a class="navbar-burger" id="burger">
+              <span></span>
+              <span></span>
+              <span></span>
+          </a>
+      </div>
+
+      <div class="navbar-menu" id="nav-links">
+          <div class="navbar-start">
+              <a class="navbar-item" href="about.html">About</a>
+              <a class="navbar-item " href="index.html"><b>App</b></a>
+          </div>
+      </div>
+  </nav>
+
     <div id="container">
       <canvas width="800" height="550"></canvas>
       <div id="controls">
@@ -62,10 +82,7 @@
     </div>
   </main>
 
-  <script src="./dist/bundle.js"></script>
-
+  <script src="./src/loader.js" type="module"></script>
 </body>
-
-
 
 </html>

@@ -3,6 +3,7 @@ import * as utils from './utils.js';
 import * as audio from './audio.js';
 import * as canvas from './visualizer.js';
 import * as json from './load-json.js';
+import * as burger from './burger.js';
 
 //params object
 const drawParams = {
@@ -36,6 +37,8 @@ const init = () => {
   canvas.setupCanvas(canvasElement, audio.analyserNode);
 
   json.loadJson();
+
+  burger.makeBurger();
 
   loop();
 }

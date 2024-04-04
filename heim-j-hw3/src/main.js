@@ -206,37 +206,56 @@ const setupUI = (canvasElement) => {
 
 
   //SOUND FILTERS
-  document.querySelector('#cb-highshelf').checked = drawParams.highshelf;
-  document.querySelector('#cb-lowshelf').checked = drawParams.lowshelf;
-  document.querySelector('#cb-distortion').checked = drawParams.distortion;
+  let highCheck = document.querySelector('#cb-highshelf');
+  let lowsCheck = document.querySelector('#cb-lowshelf');
+  let distCheck = document.querySelector('#cb-distortion');
+  let sliderDist = document.querySelector('#slider-distortion');
+  let selectVis = document.querySelector('#select-visualizer');
 
-  document.querySelector('#cb-highshelf').onchange = e => {
-    drawParams.highshelf = e.target.checked;
-    audio.toggleHighshelf(drawParams);
-  };
+  if (highCheck) {
+    highCheck.checked = drawParams.highshelf;
 
-  document.querySelector('#cb-lowshelf').onchange = e => {
-    drawParams.lowshelf = e.target.checked;
-    audio.toggleLowshelf(drawParams);
-  };
+    highCheck.onchange = e => {
+      drawParams.highshelf = e.target.checked;
+      audio.toggleHighshelf(drawParams);
+    };
+  }
 
-  document.querySelector('#cb-distortion').onchange = e => {
-    drawParams.distortion = e.target.checked;
-    audio.toggleDistortion(drawParams);
-  };
+  if (lowsCheck) {
+    lowsCheck.checked = drawParams.lowshelf;
 
-  document.querySelector('#slider-distortion').value = drawParams.distortionAmount;
-  document.querySelector('#slider-distortion').onchange = e => {
-    drawParams.distortionAmount = Number(e.target.value);
-    audio.toggleDistortion(drawParams);
-  };
+    lowsCheck.onchange = e => {
+      drawParams.lowshelf = e.target.checked;
+      audio.toggleLowshelf(drawParams);
+    };
+  }
+
+  if (distCheck) {
+    distCheck.checked = drawParams.distortion;
+
+    distCheck.onchange = e => {
+      drawParams.distortion = e.target.checked;
+      audio.toggleDistortion(drawParams);
+    };
+  }
+
+  if (sliderDist) {
+    sliderDist.value = drawParams.distortionAmount;
+    sliderDist.onchange = e => {
+      drawParams.distortionAmount = Number(e.target.value);
+      audio.toggleDistortion(drawParams);
+    };
+
+  }
 
   //TOGGLE VISUALIZATION
-  document.querySelector('#select-visualizer').onchange = e => {
-    if (e.target.value == "frequency") {
-      drawParams.toggleWave = false;
-    } else {
-      drawParams.toggleWave = true;
+  if (selectVis) {
+    selectVis.onchange = e => {
+      if (e.target.value == "frequency") {
+        drawParams.toggleWave = false;
+      } else {
+        drawParams.toggleWave = true;
+      }
     }
   }
 

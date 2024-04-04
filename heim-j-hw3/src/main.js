@@ -49,32 +49,36 @@ const setupUI = (canvasElement) => {
   const playButton = document.querySelector("#btn-play");
 
   // add .onclick event to button
-  fsButton.onclick = e => {
-    console.log("goFullscreen() called");
-    utils.goFullscreen(canvasElement);
-  };
+  if (fsButton) {
+    fsButton.onclick = e => {
+      console.log("goFullscreen() called");
+      utils.goFullscreen(canvasElement);
+    };
+  }
 
   //PLAY BUTTON
-  playButton.onclick = e => {
-    console.log(`audioCtx.state before = ${audio.audioCtx.state}`)
+  if (playButton) {
+    playButton.onclick = e => {
+      console.log(`audioCtx.state before = ${audio.audioCtx.state}`)
 
 
-    //check if in suspend state (autoplay)
-    if (audio.audioCtx.state == "suspended") {
-      audio.audioCtx.resume();
-    }
-    console.log(`audioCtx.state after = ${audio.audioCtx.state}`);
-    if (e.target.dataset.playing == "no") {
-      //if currently paused, play it
-      audio.playCurrentSound();
-      e.target.dataset.playing = "yes";
+      //check if in suspend state (autoplay)
+      if (audio.audioCtx.state == "suspended") {
+        audio.audioCtx.resume();
+      }
+      console.log(`audioCtx.state after = ${audio.audioCtx.state}`);
+      if (e.target.dataset.playing == "no") {
+        //if currently paused, play it
+        audio.playCurrentSound();
+        e.target.dataset.playing = "yes";
 
-    } else {
-      audio.pauseCurrentSound();
-      e.target.dataset.playing = "no";
-    }
+      } else {
+        audio.pauseCurrentSound();
+        e.target.dataset.playing = "no";
+      }
 
-  };
+    };
+  }
 
   //VOLUME SLIDER
   //get references to them
@@ -82,26 +86,32 @@ const setupUI = (canvasElement) => {
   let volumeLabel = document.querySelector("#label-volume");
 
   //change on input
-  volumeSlider.oninput = e => {
-    //set gain
-    audio.setVolume(e.target.value);
-    //update value on label
-    volumeLabel.innerHTML = Math.round((e.target.value / 2 * 100));
-  };
+  if (volumeSlider) {
+    volumeSlider.oninput = e => {
+      //set gain
+      audio.setVolume(e.target.value);
+      //update value on label
+      volumeLabel.innerHTML = Math.round((e.target.value / 2 * 100));
+    };
 
-  //set initial
-  volumeSlider.dispatchEvent(new Event("input"));
+
+    //set initial
+    volumeSlider.dispatchEvent(new Event("input"));
+
+  }
 
   //TRACK SELECT
   let trackSelect = document.querySelector("#select-track");
   //onchange event
-  trackSelect.onchange = e => {
-    audio.loadSoundFile(e.target.value);
-    //pause current if playing
-    if (playButton.dataset.playing == "yes") {
-      playButton.dispatchEvent(new MouseEvent("click"));
-    }
-  };
+  if (trackSelect) {
+    trackSelect.onchange = e => {
+      audio.loadSoundFile(e.target.value);
+      //pause current if playing
+      if (playButton.dataset.playing == "yes") {
+        playButton.dispatchEvent(new MouseEvent("click"));
+      }
+    };
+  }
 
   //CHECKBOX EVENTS
   //reference from html
@@ -113,66 +123,85 @@ const setupUI = (canvasElement) => {
   let invCheck = document.querySelector("#cb-invert")
 
   //start them checked
-  barCheck.checked = true;
-  fireCheck.checked = true;
-  triCheck.checked = true;
+  if (barCheck) {
+    barCheck.checked = true;
+  }
 
+  if (fireCheck) {
+    fireCheck.checked = true;
+  }
+
+  if (triCheck) {
+    triCheck.checked = true;
+  }
   //line
-  lineCheck.onclick = () => {
-    if (lineCheck.checked) {
-      drawParams.showLine = true;
-    } else {
-      drawParams.showLine = false;
+  if (lineCheck) {
+    lineCheck.onclick = () => {
+      if (lineCheck.checked) {
+        drawParams.showLine = true;
+      } else {
+        drawParams.showLine = false;
+      }
     }
   }
 
   //bars
-  barCheck.onclick = () => {
-    if (barCheck.checked) {
-      drawParams.showBars = true;
-    } else {
-      drawParams.showBars = false;
+  if (barCheck) {
+    barCheck.onclick = () => {
+      if (barCheck.checked) {
+        drawParams.showBars = true;
+      } else {
+        drawParams.showBars = false;
+      }
     }
   }
 
   //circles
-  circleCheck.onclick = () => {
-    if (circleCheck.checked) {
-      drawParams.showCircles = true;
-    } else {
-      drawParams.showCircles = false;
-    }
+  if (circleCheck) {
+    circleCheck.onclick = () => {
+      if (circleCheck.checked) {
+        drawParams.showCircles = true;
+      } else {
+        drawParams.showCircles = false;
+      }
 
+    }
   }
 
   //invert
-  invCheck.onclick = () => {
-    if (invCheck.checked) {
-      drawParams.showInvert = true;
-    } else {
-      drawParams.showInvert = false;
-    }
+  if (invCheck) {
+    invCheck.onclick = () => {
+      if (invCheck.checked) {
+        drawParams.showInvert = true;
+      } else {
+        drawParams.showInvert = false;
+      }
 
+    }
   }
 
   //fireworks
-  fireCheck.onclick = () => {
-    if (fireCheck.checked) {
-      drawParams.showFireworks = true;
-    } else {
-      drawParams.showFireworks = false;
-    }
+  if (fireCheck) {
+    fireCheck.onclick = () => {
+      if (fireCheck.checked) {
+        drawParams.showFireworks = true;
+      } else {
+        drawParams.showFireworks = false;
+      }
 
+    }
   }
 
   //triangles
-  triCheck.onclick = () => {
-    if (triCheck.checked) {
-      drawParams.showTriangles = true;
-    } else {
-      drawParams.showTriangles = false;
-    }
+  if (triCheck) {
+    triCheck.onclick = () => {
+      if (triCheck.checked) {
+        drawParams.showTriangles = true;
+      } else {
+        drawParams.showTriangles = false;
+      }
 
+    }
   }
 
 

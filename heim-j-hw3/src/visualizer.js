@@ -6,6 +6,9 @@ let fireworks = [];
 let triangles = [];
 
 const setupCanvas = (canvasElement, analyserNodeRef) => {
+    if (!ctx) {
+        return;
+    }
     // create drawing context
     ctx = canvasElement.getContext("2d");
     canvasWidth = canvasElement.width;
@@ -14,7 +17,7 @@ const setupCanvas = (canvasElement, analyserNodeRef) => {
     analyserNode = analyserNodeRef;
     // this is the array where the analyser data will be stored
     audioData = new Uint8Array(analyserNode.fftSize / 2);
-    
+
     //push fireworks into the array
     fireworks.push(new sprite.FireWork(100, 100, -100))
     fireworks.push(new sprite.FireWork(240, 140, -60))
@@ -24,7 +27,7 @@ const setupCanvas = (canvasElement, analyserNodeRef) => {
     fireworks.push(new sprite.FireWork(600, 300, 900))
 
     //push trianlges into the array
-    triangles.push(new sprite.Triangle(770, 20,27))
+    triangles.push(new sprite.Triangle(770, 20, 27))
     triangles.push(new sprite.Triangle(730, 30, 20))
     triangles.push(new sprite.Triangle(770, 60, 20))
 
@@ -33,9 +36,15 @@ const setupCanvas = (canvasElement, analyserNodeRef) => {
     triangles.push(new sprite.Triangle(70, 520, 20))
 
     console.log(triangles)
+
 }
 
 const draw = (params = {}) => {
+    //if no ctx
+    if (!ctx) {
+        return;
+    }
+
     // 1 - populate the audioData array with the frequency data from the analyserNode
     if (params.toggleWave) {
         analyserNode.getByteTimeDomainData(audioData); //waveform data
@@ -127,8 +136,8 @@ const draw = (params = {}) => {
     }
 
     //make spinning triangles from class
-    if(params.showTriangles){
-        for(let t of triangles){
+    if (params.showTriangles) {
+        for (let t of triangles) {
             t.draw(ctx);
 
             t.update(audioData);

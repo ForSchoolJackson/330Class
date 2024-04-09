@@ -21,10 +21,16 @@ const loadJson = () => {
         html += `<p>${obj.instructions}</p>`
 
         //for title of app
-        document.querySelector("title").innerHTML = obj.title;
+        const titleElement = document.querySelector("title");
+        if (titleElement) {
+            titleElement.innerHTML = obj.title;
+        }
 
-        //for inside the output
-        document.querySelector("#output").innerHTML = html;
+        //for inside the info
+        const outputElement = document.querySelector("#output");
+        if (outputElement) {
+            outputElement.innerHTML = html;
+        }
     }
     xhr.onerror = e => console.log(`In onerror - HTTP Status Code = ${e.target.status}`)
     xhr.open("GET", url)

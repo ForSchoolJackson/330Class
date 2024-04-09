@@ -1,99 +1,3 @@
-body {
-  background: #131016;
-  font-family: tahoma, verdana, sans serif;
-}
-
-
-#container {
-  display: flex;
-  font-size: 1.2vw;
-  text-align: center;
-}
-
-#controls {
-  width: 30%;
-  color: white;
-  border-style: solid;
-  border-width: 2px;
-  border-color: white;
-  margin-top: 1rem;
-  margin-left: 1rem;
-  margin-right: 1rem;
-}
-
-button{
-  background-color: #3e3e3e;
-  border: none;
-  color: white;
-  padding:  10px 0px;
-  text-align: center;
-  cursor: pointer;
-  border-radius: 7px;
-}
-
-button:hover {
-  background-color: #555; 
-}
-
-select{
-  background-color: #3e3e3e;
-  border: none;
-  color: white;
-  padding:  10px 5px;
-  text-align: center;
-  font-size: 1rem;
-  cursor: pointer;
-  border-radius: 5px;
-}
-
-#checkboxes{
-  display: flex;
-}
-
-#visual-check span, #sound-check span {
-  text-align: left;
-  margin-left: 1rem;
-  display: block;
-}
-
-#output p{
-  text-align: left;
-  margin-left: 1rem;
-  margin-right: 1rem;
-}
-
-#output ol{
-  text-align: left;
-}
-
-canvas {
-  width: 70%;
-  margin-top: 1rem;
-  margin-left: 1rem;
-  box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.5);
-  background: #08041f;
-}
-
-*{font-family:sans-serif;}
-span{margin-right:2em;}
-#slider-distortion{position:relative;top:.7em;}
-
-#label-volume {
-  margin-left: 1rem;
-}
-
-section {
-  margin-bottom: 2rem;
-}
-
-#select-track{
-  margin-bottom: 1rem;
-}
-
-#btn-play {
-  font-size: 1.2rem;
-  width: 6rem;
-}
 
 button[data-playing="yes"]:after {
   content: "Pause";
@@ -103,12 +7,9 @@ button[data-playing="no"]:after {
   content: "Play";
 }
 
-#btn-fs {
-  font-size: 1.2rem;
-  width: 8rem;
-}
-
-#select-visualizer {
-  display: block;
-  margin: 1rem;
+@media screen and (max-width: 900px) {
+  canvas{
+    width: 100%;
+       
+  }
 }

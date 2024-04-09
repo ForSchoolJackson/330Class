@@ -1,85 +1,109 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="has-background-black">
 
 <head>
   <meta charset="utf-8">
   <title>Audio Visualizer</title>
   <link href="./styles/default-styles.css" type="text/css" rel="stylesheet">
-  <link rel="shortcut icon" type="image/png" href="media/icons/note-icon.png">
+  <link rel="shortcut icon" type="image/png" href="media/images/note-icon.png">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
 </head>
 
 <body>
   <main>
+
+    <!-- navbar -->
     <nav class="navbar has-shadow is-white">
       <div class="navbar-brand">
-          <a class="navbar-item">
-              <img src="media/icons/note-icon.png" alt="site logo" style="max-height:70px" class="py-2 px-2">
-          </a>
-          <a class="navbar-burger" id="burger">
-              <span></span>
-              <span></span>
-              <span></span>
-          </a>
+        <a class="navbar-item" href="about.html">
+          <img src="media/images/note-icon.png" alt="site logo" style="max-height:70px" class="py-2 px-2">
+        </a>
+        <a class="navbar-burger" id="burger">
+          <span></span>
+          <span></span>
+          <span></span>
+        </a>
       </div>
 
       <div class="navbar-menu" id="nav-links">
-          <div class="navbar-start">
-              <a class="navbar-item" href="about.html">About</a>
-              <a class="navbar-item " href="index.html"><b>App</b></a>
-          </div>
+        <div class="navbar-start">
+          <a class="navbar-item" href="about.html">About</a>
+          <a class="navbar-item " href="index.html"><b>App</b></a>
+        </div>
       </div>
-  </nav>
+    </nav>
 
-    <div id="container">
-      <canvas width="800" height="550"></canvas>
-      <div id="controls">
-        <div id="output">...</div>
-        <div>
-          <label>Track:
-            <select id="select-track">
-              <option value="media/music/Nocturne.mp3" selected>Nocturne</option>
-              <option value="media/music/Halloween Mountain King.mp3">Hall of the Mountain King</option>
-              <option value="media/music/Toccata and Fugue.mp3">Toccatta and Fugue</option>
+    <!-- canvas -->
+    <div>
+      <div class="container p-5 is-centered">
+
+        <div class="column box">
+          <canvas width="800" height="550"></canvas>
+        </div>
+
+        <div class="is-1"></div>
+
+        <!-- controls -->
+        <div id="controls" class="is-light px-5 box ">
+
+          <div>
+            <button id="btn-play" data-playing="no" class="button is-danger"></button>
+            <button id="btn-fs" class="button is-danger">Full Screen</button>
+          </div>
+
+          <div>
+            <label class="title is-size-5 has-text-danger">Track:
+              <select id="select-track">
+                <option value="media/music/Nocturne.mp3" selected>Nocturne</option>
+                <option value="media/music/Halloween Mountain King.mp3">Hall of the Mountain King</option>
+                <option value="media/music/Toccata and Fugue.mp3">Toccatta and Fugue</option>
+              </select>
+            </label>
+          </div>
+   
+          <div>
+            <label class="title is-size-5 has-text-danger"> Volume: </label> <input type="range" id="slider-volume"
+              min="0" max="2" value="1" step="0.01">
+            <span id="label-volume">???</span>
+          </div>
+
+          <div class=" select is-rounded is-small">
+            <select id="select-visualizer" >
+              <option value="frequency" selected>Frequency Data</option>
+              <option value="wave">Waveform</option>
+
             </select>
-          </label>
-          <br>
-
-          <button id="btn-play" data-playing="no"></button>
-          <button id="btn-fs">Full Screen</button>
-        </div>
-
-        <div>
-          Volume: <input type="range" id="slider-volume" min="0" max="2" value="1" step="0.01">
-          <span id="label-volume">???</span>
-        </div>
-        <div id="checkboxes">
-          <div id="visual-check">
-            <span><input type="checkbox" id="cb-bars"><label for="cb-bars">Bars</label></span>
-            <span><input type="checkbox" id="cb-fireworks"><label for="cb-fireworks">Fireworks</label></span>
-            <span><input type="checkbox" id="cb-triangles"><label for="cb-triangles">Triangles</label></span>
-            <span><input type="checkbox" id="cb-lines"><label for="cb-lines">Lines</label></span>
-            <span><input type="checkbox" id="cb-circles"><label for="cb-circles">Circles</label></span>
-            <span><input type="checkbox" id="cb-invert"><label for="cb-invert">Invert Colors</label></span>
           </div>
 
-          <div id="sound-check">
-            <span><input type="checkbox" id="cb-highshelf"><label for="cb-highshelf">Treble</label></span>
-            <span><input type="checkbox" id="cb-lowshelf"><label for="cb-lowshelf">Bass</label></span>
-            <span><input type="checkbox" id="cb-distortion"><label for="cb-distortion">Distortion</label></span>
-            <span><input type="range" min="0" max="100" value="0" id="slider-distortion"></span>
+          <div id="checkboxes">
+            <div id="visual-check">
+              <span><input type="checkbox" id="cb-bars" ><label for="cb-bars"><b>Bars</b></label></span>
+              <span class="is-1">|</span>
+              <span><input type="checkbox" id="cb-fireworks"><label for="cb-fireworks"><b>Fireworks</b></label></span>
+              <span class="is-1">|</span>
+              <span><input type="checkbox" id="cb-triangles"><label for="cb-triangles"><b>Triangles</b></label></span>
+              <span class="is-1">|</span>
+              <span><input type="checkbox" id="cb-lines"><label for="cb-lines"><b>Lines</b></label></span>
+              <span class="is-1">|</span>
+              <span><input type="checkbox" id="cb-circles"><label for="cb-circles"><b>Circles</b></label></span>
+              <span class="is-1">|</span>
+              <span><input type="checkbox" id="cb-invert"><label for="cb-invert"><b>Invert Colors</b></label></span>
+            </div>
+
+            <div id="sound-check">
+              <span><input type="checkbox" id="cb-highshelf"><label for="cb-highshelf"><b>Treble</b></label></span>
+              <span class="is-1">|</span>
+              <span><input type="checkbox" id="cb-lowshelf"><label for="cb-lowshelf"><b>Bass</b></label></span>
+              <span class="is-1">|</span>
+              <span><input type="checkbox" id="cb-distortion"><label for="cb-distortion"><b>Distortion</b></label></span>
+              <span><input type="range" min="0" max="100" value="0" id="slider-distortion"></span>
+            </div>
+
           </div>
 
         </div>
-
-        <select id="select-visualizer">
-          <option value="frequency" selected>Frequency Data</option>
-          <option value="wave">Waveform</option>
-
-        </select>
 
       </div>
-    </div>
   </main>
 
   <script src="./src/loader.js" type="module"></script>

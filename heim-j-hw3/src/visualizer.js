@@ -6,8 +6,9 @@ let fireworks = [];
 let triangles = [];
 
 const setupCanvas = (canvasElement, analyserNodeRef) => {
-    if (!ctx) {
-        return;
+    if (!canvasElement) {
+       
+        return; 
     }
     // create drawing context
     ctx = canvasElement.getContext("2d");

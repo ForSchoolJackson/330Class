@@ -1,5 +1,6 @@
 import * as utils from './utils.js';
-import * as sprite from './sprites.js';
+import * as triangle from './Triangles.js';
+import * as firework from './Fireworks.js';
 
 let ctx, canvasWidth, canvasHeight, analyserNode, audioData;
 let fireworks = [];
@@ -20,21 +21,21 @@ const setupCanvas = (canvasElement, analyserNodeRef) => {
     audioData = new Uint8Array(analyserNode.fftSize / 2);
 
     //push fireworks into the array
-    fireworks.push(new sprite.FireWork(100, 100, -100))
-    fireworks.push(new sprite.FireWork(240, 140, -60))
-    fireworks.push(new sprite.FireWork(200, 340, 200))
-    fireworks.push(new sprite.FireWork(450, 200, 400))
-    fireworks.push(new sprite.FireWork(500, 100, 100))
-    fireworks.push(new sprite.FireWork(600, 300, 900))
+    fireworks.push(new firework.FireWork(100, 100, -100))
+    fireworks.push(new firework.FireWork(240, 140, -60))
+    fireworks.push(new firework.FireWork(200, 340, 200))
+    fireworks.push(new firework.FireWork(450, 200, 400))
+    fireworks.push(new firework.FireWork(500, 100, 100))
+    fireworks.push(new firework.FireWork(600, 300, 900))
 
     //push trianlges into the array
-    triangles.push(new sprite.Triangle(770, 20, 27))
-    triangles.push(new sprite.Triangle(730, 30, 20))
-    triangles.push(new sprite.Triangle(770, 60, 20))
+    triangles.push(new triangle.Triangle(770, 20, 27))
+    triangles.push(new triangle.Triangle(730, 30, 20))
+    triangles.push(new triangle.Triangle(770, 60, 20))
 
-    triangles.push(new sprite.Triangle(30, 530, 27))
-    triangles.push(new sprite.Triangle(40, 490, 20))
-    triangles.push(new sprite.Triangle(70, 520, 20))
+    triangles.push(new triangle.Triangle(30, 530, 27))
+    triangles.push(new triangle.Triangle(40, 490, 20))
+    triangles.push(new triangle.Triangle(70, 520, 20))
 
     //console.log(triangles)
 

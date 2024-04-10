@@ -51,7 +51,7 @@ const setupUI = (canvasElement) => {
   // add .onclick event to button
   if (fsButton) {
     fsButton.onclick = e => {
-      console.log("goFullscreen() called");
+      //console.log("goFullscreen() called");
       utils.goFullscreen(canvasElement);
     };
   }

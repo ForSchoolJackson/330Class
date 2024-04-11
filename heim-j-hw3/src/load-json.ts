@@ -6,7 +6,7 @@ const loadJson = () => {
 
         let json;
         try {
-            json = JSON.parse(e.target.responseText)
+            json = JSON.parse(xhr.responseText)
         } catch {
             document.querySelector("#output").innerHTML = "BAD JSON";
             return;
@@ -32,7 +32,7 @@ const loadJson = () => {
             outputElement.innerHTML = html;
         }
     }
-    xhr.onerror = e => console.log(`In onerror - HTTP Status Code = ${e.target.status}`)
+    xhr.onerror = e => console.log(`In onerror - HTTP Status Code = ${xhr.status}`)
     xhr.open("GET", url)
     xhr.send();
 

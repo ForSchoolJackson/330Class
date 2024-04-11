@@ -25,3 +25,7 @@ FAIR USE
 Used a music note icon as a favicom from https://icons8.com
 Got the copywrite music for free from https://www.chosic.com and https://pixabay.com/music
 Audio visualizer image from https://sciencecast.org/casts/vhm9iputkegn
+
+CODING LANGUAGE
+Turned all my js files into typescript
+I added an interfaces and two enums for audio and main to replace of the fake enums and also strongly typed all variables and function parameters

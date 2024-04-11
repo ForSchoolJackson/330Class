@@ -1,16 +1,21 @@
 //traingle class
 class Triangle {
+    x: number;
+    y: number;
+    add: number;
+    rotate: number;
+
     //constructor
-    constructor(x, y, add) {
+    constructor(x: number, y: number, add: number) {
         this.x = x;
         this.y = y;
         this.add = add;
         this.rotate = 0;
     }
-    drawTriangle(ctx, x, y, size, color) {
+    drawTriangle(ctx: CanvasRenderingContext2D, x: number, y: number, size: number, color: string) {
         //make height based on the size
         //baied on pythogroean theroem
-        let height = Math.sqrt(2/3) * size;
+        let height = Math.sqrt(2 / 3) * size;
 
         ctx.save();
         ctx.fillStyle = color;
@@ -23,7 +28,7 @@ class Triangle {
         ctx.restore();
     }
     //draw the triangles
-    draw(ctx) {
+    draw(ctx: CanvasRenderingContext2D) {
         let color = "rgb(180, 10, 100)"
         //tranlsate and rotate triangle
         ctx.save();
@@ -34,15 +39,15 @@ class Triangle {
 
     }
     //rotate triangles with music
-    update(audioData) {
+    update(audioData: Uint8Array) {
         let speed = 0.1;
-        let audioRotate = audioData[0]/255 * speed;
+        let audioRotate = audioData[0] / 255 * speed;
         this.rotate += audioRotate;
 
-       // this.rotate += speed;
+        // this.rotate += speed;
 
     }
 
 }
 
-export {Triangle };
+export { Triangle };

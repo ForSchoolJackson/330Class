@@ -1,24 +1,25 @@
 // 1 - our WebAudio context, **we will export and make this public at the bottom of the file**
-let audioCtx;
+let audioCtx: AudioContext;
 
 // **These are "private" properties - these will NOT be visible outside of this module (i.e. file)**
 // 2 - WebAudio nodes that are part of our WebAudio audio routing graph
-let element, sourceNode, analyserNode, gainNode, distortionFilter, highBiquadFilter, lowBiquadFilter;
+let element: HTMLAudioElement;
+let sourceNode: AudioNode;
+let analyserNode: AnalyserNode;
+let gainNode: GainNode;
+let distortionFilter: WaveShaperNode;
+let highBiquadFilter: BiquadFilterNode;
+let lowBiquadFilter: BiquadFilterNode;
 
-// 3 - here we are faking an enumeration
-const DEFAULTS = Object.freeze({
-    gain: .5,
-    numSamples: 256
-});
+//real enum
+import { DEFAULTS } from './enums/audio-defaults.enum';
 
-// 4 - create a new array of 8-bit integers (0-255)
-// this is a typed array to hold the audio frequency data
-let audioData = new Uint8Array(DEFAULTS.numSamples / 2);
+import { DrawParams } from './interfaces/drawParams.interface';
 
 // **Next are "public" methods - we are going to export all of these at the bottom of this file**
-const setupWebaudio = (filePath) => {
+const setupWebaudio = (filePath: string) => {
     // 1 - The || is because WebAudio has not been standardized across browsers yet
-    const AudioContext = window.AudioContext || window.webkitAudioContext;
+    const AudioContext = window.AudioContext;
     audioCtx = new AudioContext();
 
     // 2 - this creates an <audio> element
@@ -49,7 +50,7 @@ const setupWebaudio = (filePath) => {
     lowBiquadFilter.type = "lowshelf";
 
     distortionFilter = audioCtx.createWaveShaper();
-    distortionFilter.type = "distortion";
+    //distortionFilter.type = "distortion";
 
 
     // 8 - connect the nodes - we now have an audio graph
@@ -64,7 +65,7 @@ const setupWebaudio = (filePath) => {
 }
 
 //load
-const loadSoundFile = (filePath) => {
+const loadSoundFile = (filePath: string) => {
     element.src = filePath;
 }
 
@@ -79,14 +80,14 @@ const pauseCurrentSound = () => {
 }
 
 //volume change
-const setVolume = (value) => {
+const setVolume = (value: number) => {
     // make sure that it's a Number rather than a String
     value = Number(value);
     gainNode.gain.value = value
 }
 
 //change highShelf
-const toggleHighshelf = (params = {}) => {
+const toggleHighshelf = (params: DrawParams) => {
     if (params.highshelf) {
         highBiquadFilter.frequency.setValueAtTime(1000, audioCtx.currentTime); // we created the `biquadFilter` (i.e. "treble") node last time
         highBiquadFilter.gain.setValueAtTime(25, audioCtx.currentTime);
@@ -96,7 +97,7 @@ const toggleHighshelf = (params = {}) => {
 }
 
 //change lowShelf
-const toggleLowshelf = (params = {}) => {
+const toggleLowshelf = (params: DrawParams) => {
     if (params.lowshelf) {
         lowBiquadFilter.frequency.setValueAtTime(1000, audioCtx.currentTime);
         lowBiquadFilter.gain.setValueAtTime(15, audioCtx.currentTime);
@@ -106,7 +107,7 @@ const toggleLowshelf = (params = {}) => {
 }
 
 //change distortion
-const toggleDistortion = (params = {}) => {
+const toggleDistortion = (params: DrawParams) => {
     if (params.distortion) {
         distortionFilter.curve = null; // being paranoid and trying to trigger garbage collection
         distortionFilter.curve = makeDistortionCurve(params.distortionAmount);
@@ -116,7 +117,7 @@ const toggleDistortion = (params = {}) => {
 }
 
 //changes based on slider
-const makeDistortionCurve = (amount = 20) => {
+const makeDistortionCurve = (amount: number = 20) => {
     let n_samples = 256, curve = new Float32Array(n_samples);
     for (let i = 0; i < n_samples; ++i) {
         let x = i * 2 / n_samples - 1;

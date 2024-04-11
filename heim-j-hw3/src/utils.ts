@@ -1,8 +1,8 @@
-const makeColor = (red, green, blue, alpha = 1) => {
+const makeColor = (red: number, green: number, blue: number, alpha: number = 1) => {
   return `rgba(${red},${green},${blue},${alpha})`;
 };
 
-const getRandom = (min, max) => {
+const getRandom = (min: number, max: number) => {
   return Math.random() * (max - min) + min;
 };
 
@@ -12,19 +12,12 @@ const getRandomColor = () => {
   return `rgba(${getByte()},${getByte()},${getByte()},1)`;
 };
 
-const getLinearGradient = (ctx, startX, startY, endX, endY, colorStops) => {
-  let lg = ctx.createLinearGradient(startX, startY, endX, endY);
-  for (let stop of colorStops) {
-    lg.addColorStop(stop.percent, stop.color);
-  }
-  return lg;
-};
-
-const makeLine = (ctx, x, y, audioData, canvasWidth) => {
+const makeLine = (ctx: CanvasRenderingContext2D, x: number, y: number, audioData: Uint8Array, canvasWidth: number) => {
   ctx.beginPath();
   ctx.moveTo(x, y);
-  for (let i of audioData) {
-    ctx.lineTo(x, y - i);
+  for (let i = 0; i < audioData.length; i++) {
+    const value = audioData[i];
+    ctx.lineTo(x, y - value);
     x += (canvasWidth / (audioData.length - 50));
   }
   ctx.stroke();
@@ -32,7 +25,7 @@ const makeLine = (ctx, x, y, audioData, canvasWidth) => {
   ctx.restore();
 }
 
-const makeCircle = (ctx, x, y, percent, radius) => {
+const makeCircle = (ctx: CanvasRenderingContext2D, x: number, y: number, percent: number, radius: number) => {
   ctx.beginPath();
   ctx.fillStyle = makeColor(105, 4, 58, .5 - percent / 5);
   ctx.arc(x, y, radius * percent, 0, 2 * Math.PI, false);
@@ -55,4 +48,4 @@ const goFullscreen = (element) => {
   // .. and do nothing if the method is not supported
 };
 
-export { makeColor, getRandom, getRandomColor, getLinearGradient, goFullscreen, makeLine, makeCircle };
+export { makeColor, getRandom, getRandomColor, goFullscreen, makeLine, makeCircle };

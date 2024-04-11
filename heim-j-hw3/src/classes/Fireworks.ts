@@ -1,7 +1,15 @@
 //mkae firework like shapes
-class FireWork {
+export default class FireWork {
+    centerX: number;
+    centerY: number;
+    add: number;
+    n: number;
+    divergence: number;
+    c: number;
+    radius: number;
+
     //construcor
-    constructor(centerX, centerY, add) {
+    constructor(centerX: number, centerY: number, add: number) {
         this.centerX = centerX;
         this.centerY = centerY;
         this.add = add
@@ -11,11 +19,11 @@ class FireWork {
         this.radius = 2;
     }
     // calculate degrees
-    dtr(degrees) {
+    dtr(degrees: number) {
         return degrees * (Math.PI / 180);
     }
     //make the circles
-    drawCircle(ctx, x, y, radius, color) {
+    drawCircle(ctx: CanvasRenderingContext2D, x: number, y: number, radius: number, color: string) {
         ctx.save();
         ctx.fillStyle = color;
         ctx.beginPath();
@@ -25,7 +33,7 @@ class FireWork {
         ctx.restore();
     }
     //draw fireworks
-    draw(ctx) {
+    draw(ctx: CanvasRenderingContext2D) {
 
         for (let i = 0; i < this.n; i++) {
             let aFlower = i * this.dtr(137.1)
@@ -43,7 +51,7 @@ class FireWork {
 
     }
     //add more dots with music
-    update(audioData) {
+    update(audioData: Uint8Array) {
         let add = 0
         for (let i = 0; i < audioData.length; i++) {
             add += audioData[i];
@@ -54,4 +62,4 @@ class FireWork {
     }
 }
 
-export {FireWork };
+export { FireWork };

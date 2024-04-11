@@ -1,31 +1,14 @@
 //imports
-import * as utils from './utils.js';
-import * as audio from './audio.js';
-import * as canvas from './visualizer.js';
-import * as json from './load-json.js';
-import * as burger from './burger.js';
+import * as utils from './utils';
+import * as audio from './audio';
+import * as canvas from './visualizer';
+import * as json from './load-json';
+import * as burger from './burger';
 
-//params object
-const drawParams = {
-  showLine: false,
-  showBars: true,
-  showCircles: false,
-  showInvert: false,
-  showFireworks: true,
-  showTriangles: true,
-  highshelf: false,
-  lowshelf: false,
-  distortion: false,
-  toggleWave: false,
+import { drawParams } from './interfaces/drawParams.interface';
 
-  //set intial distortion
-  distortionAmount: 20
-}
-
-// 1 - here we are faking an enumeration
-const DEFAULTS = Object.freeze({
-  sound1: "media/music/Nocturne.mp3"
-});
+//enum
+import { DEFAULTS } from './enums/main-defaults.enum';
 
 const init = () => {
   audio.setupWebaudio(DEFAULTS.sound1);
@@ -43,10 +26,10 @@ const init = () => {
   loop();
 }
 
-const setupUI = (canvasElement) => {
+const setupUI = (canvasElement: HTMLCanvasElement) => {
   // A - hookup fullscreen button
-  const fsButton = document.querySelector("#btn-fs");
-  const playButton = document.querySelector("#btn-play");
+  const fsButton = document.querySelector("#btn-fs") as HTMLButtonElement;
+  const playButton = document.querySelector("#btn-play") as HTMLButtonElement;
 
   // add .onclick event to button
   if (fsButton) {
@@ -67,14 +50,15 @@ const setupUI = (canvasElement) => {
         audio.audioCtx.resume();
       }
       console.log(`audioCtx.state after = ${audio.audioCtx.state}`);
-      if (e.target.dataset.playing == "no") {
+      const target = e.target as HTMLInputElement;
+      if (target.dataset.playing == "no") {
         //if currently paused, play it
         audio.playCurrentSound();
-        e.target.dataset.playing = "yes";
+        target.dataset.playing = "yes";
 
       } else {
         audio.pauseCurrentSound();
-        e.target.dataset.playing = "no";
+        target.dataset.playing = "no";
       }
 
     };
@@ -82,16 +66,17 @@ const setupUI = (canvasElement) => {
 
   //VOLUME SLIDER
   //get references to them
-  let volumeSlider = document.querySelector("#slider-volume");
-  let volumeLabel = document.querySelector("#label-volume");
+  let volumeSlider = document.querySelector("#slider-volume") as HTMLButtonElement;
+  let volumeLabel = document.querySelector("#label-volume") as HTMLButtonElement;
 
   //change on input
   if (volumeSlider) {
     volumeSlider.oninput = e => {
+      const target = e.target as HTMLInputElement;
       //set gain
-      audio.setVolume(e.target.value);
+      audio.setVolume(parseFloat(target.value));
       //update value on label
-      volumeLabel.innerHTML = Math.round((e.target.value / 2 * 100));
+      volumeLabel.innerHTML = `${Math.round((parseFloat(target.value) / 2 * 100))}`;
     };
 
 
@@ -101,11 +86,12 @@ const setupUI = (canvasElement) => {
   }
 
   //TRACK SELECT
-  let trackSelect = document.querySelector("#select-track");
+  let trackSelect = document.querySelector("#select-track") as HTMLButtonElement;
   //onchange event
   if (trackSelect) {
     trackSelect.onchange = e => {
-      audio.loadSoundFile(e.target.value);
+      const target = e.target as HTMLInputElement;
+      audio.loadSoundFile(target.value);
       //pause current if playing
       if (playButton.dataset.playing == "yes") {
         playButton.dispatchEvent(new MouseEvent("click"));
@@ -115,12 +101,12 @@ const setupUI = (canvasElement) => {
 
   //CHECKBOX EVENTS
   //reference from html
-  let lineCheck = document.querySelector("#cb-lines")
-  let fireCheck = document.querySelector("#cb-fireworks")
-  let triCheck = document.querySelector("#cb-triangles")
-  let barCheck = document.querySelector("#cb-bars")
-  let circleCheck = document.querySelector("#cb-circles")
-  let invCheck = document.querySelector("#cb-invert")
+  let lineCheck = document.querySelector("#cb-lines") as HTMLInputElement;
+  let fireCheck = document.querySelector("#cb-fireworks") as HTMLInputElement;
+  let triCheck = document.querySelector("#cb-triangles") as HTMLInputElement;
+  let barCheck = document.querySelector("#cb-bars") as HTMLInputElement;
+  let circleCheck = document.querySelector("#cb-circles") as HTMLInputElement;
+  let invCheck = document.querySelector("#cb-invert") as HTMLInputElement;
 
   //start them checked
   if (barCheck) {
@@ -206,17 +192,18 @@ const setupUI = (canvasElement) => {
 
 
   //SOUND FILTERS
-  let highCheck = document.querySelector('#cb-highshelf');
-  let lowsCheck = document.querySelector('#cb-lowshelf');
-  let distCheck = document.querySelector('#cb-distortion');
-  let sliderDist = document.querySelector('#slider-distortion');
-  let selectVis = document.querySelector('#select-visualizer');
+  let highCheck = document.querySelector('#cb-highshelf') as HTMLInputElement;
+  let lowsCheck = document.querySelector('#cb-lowshelf') as HTMLInputElement;
+  let distCheck = document.querySelector('#cb-distortion') as HTMLInputElement;
+  let sliderDist = document.querySelector('#slider-distortion') as HTMLInputElement;
+  let selectVis = document.querySelector('#select-visualizer') as HTMLInputElement;
 
   if (highCheck) {
     highCheck.checked = drawParams.highshelf;
 
     highCheck.onchange = e => {
-      drawParams.highshelf = e.target.checked;
+      const target = e.target as HTMLInputElement;
+      drawParams.highshelf = target.checked;
       audio.toggleHighshelf(drawParams);
     };
   }
@@ -225,7 +212,8 @@ const setupUI = (canvasElement) => {
     lowsCheck.checked = drawParams.lowshelf;
 
     lowsCheck.onchange = e => {
-      drawParams.lowshelf = e.target.checked;
+      const target = e.target as HTMLInputElement;
+      drawParams.lowshelf = target.checked;
       audio.toggleLowshelf(drawParams);
     };
   }
@@ -234,15 +222,17 @@ const setupUI = (canvasElement) => {
     distCheck.checked = drawParams.distortion;
 
     distCheck.onchange = e => {
-      drawParams.distortion = e.target.checked;
+      const target = e.target as HTMLInputElement;
+      drawParams.distortion = target.checked;
       audio.toggleDistortion(drawParams);
     };
   }
 
   if (sliderDist) {
-    sliderDist.value = drawParams.distortionAmount;
+    sliderDist.value = drawParams.distortionAmount.toString();
     sliderDist.onchange = e => {
-      drawParams.distortionAmount = Number(e.target.value);
+      const target = e.target as HTMLInputElement;
+      drawParams.distortionAmount = Number(target.value);
       audio.toggleDistortion(drawParams);
     };
 
@@ -251,7 +241,8 @@ const setupUI = (canvasElement) => {
   //TOGGLE VISUALIZATION
   if (selectVis) {
     selectVis.onchange = e => {
-      if (e.target.value == "frequency") {
+      const target = e.target as HTMLInputElement;
+      if (target.value == "frequency") {
         drawParams.toggleWave = false;
       } else {
         drawParams.toggleWave = true;
@@ -263,9 +254,9 @@ const setupUI = (canvasElement) => {
 
 //DATA VISULIZER
 const loop = () => {
-  let fps = 60;
-  canvas.draw(drawParams, fps);
-  setTimeout(loop);
+  let fps: number = 60;
+  canvas.draw(drawParams);
+  setTimeout(loop, 1000/fps);
 
 }
 

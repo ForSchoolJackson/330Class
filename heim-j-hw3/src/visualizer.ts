@@ -1,15 +1,17 @@
-import * as utils from './utils.js';
-import * as triangle from './Triangles.js';
-import * as firework from './Fireworks.js';
+import * as utils from './utils';
+import * as triangle from './classes/Triangles';
+import * as firework from './classes/Fireworks';
 
-let ctx, canvasWidth, canvasHeight, analyserNode, audioData;
+let ctx:CanvasRenderingContext2D, canvasWidth:number, canvasHeight:number, analyserNode: AnalyserNode, audioData: Uint8Array;
 let fireworks = [];
 let triangles = [];
 
-const setupCanvas = (canvasElement, analyserNodeRef) => {
+import { DrawParams } from './interfaces/drawParams.interface';
+
+const setupCanvas = (canvasElement: HTMLCanvasElement, analyserNodeRef: AnalyserNode) => {
     if (!canvasElement) {
-       
-        return; 
+
+        return;
     }
     // create drawing context
     ctx = canvasElement.getContext("2d");
@@ -41,7 +43,7 @@ const setupCanvas = (canvasElement, analyserNodeRef) => {
 
 }
 
-const draw = (params = {}) => {
+const draw = (params: DrawParams) => {
     //if no ctx
     if (!ctx) {
         return;
@@ -150,7 +152,6 @@ const draw = (params = {}) => {
     let imageData = ctx.getImageData(0, 0, canvasWidth, canvasHeight);
     let data = imageData.data;
     let length = data.length;
-    let width = imageData.width;
     // B) Iterate through each pixel, stepping 4 elements at a time (which is the RGBA for 1 pixel)
     for (let i = 0; i < length; i++) {
         // C) randomly change every 20th pixel to red

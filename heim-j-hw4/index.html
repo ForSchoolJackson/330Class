@@ -11,6 +11,7 @@
 	<script src="https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.js"></script>
 	<link href="https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.css" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="styles/default-styles.css">
+	<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
 	<script src="./src/main.js" type="module"></script>
 </head>
 
@@ -66,7 +67,7 @@
 						StoneybrookState Park
 					</a>
 				</div>
-			</div>  <!-- End -->
+			</div> <!-- End -->
 		</div>
 	</div>
 	<div class="has-background-info p-1">
@@ -75,6 +76,17 @@
 			<div class="columns m-1">
 				<div class="column is-one-third has-background-info-light mr-1">
 					<div id="details-2">???</div>
+					<br>
+					<div id="buttons" style="display: none;">
+						<button id="btn-fav" class="button is-success">
+							Favorites
+							<span class="material-symbols-outlined">Check</span>
+						</button>
+						<button id="btn-delete" class="button is-warning">
+							Delete
+							<span class="material-symbols-outlined">close</span>
+						</button>
+					</div>
 				</div>
 				<div class="column has-background-info-light">
 					<h2 class="subtitle is-size-6 has-text-weight-bold mb-1">Park Details</h2>

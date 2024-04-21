@@ -1,5 +1,6 @@
 import * as map from "./map.js";
 import * as ajax from "./ajax.js";
+import * as storage from "./storage.js";
 
 // I. Variables & constants
 // NB - it's easy to get [longitude,latitude] coordinates with this tool: http://geojson.io/
@@ -8,7 +9,7 @@ const lnglatUSA = [-98.5696, 39.8282];
 let geojson;
 
 //favorites array
-let favoriteIds = ["p20", "p79", "p180", "p43"];
+let favoriteIds = [];
 let currentId;
 
 
@@ -93,11 +94,27 @@ const createFavoriteElement = (id) => {
 const changeButtonStates = () => {
 	if (favoriteIds.includes(currentId)) {
 		favoriteButton.disabled = true;
-		deleteButton.disabled = false; 
+		deleteButton.disabled = false;
 	} else {
-		favoriteButton.disabled = false; 
-		deleteButton.disabled = true; 
+		favoriteButton.disabled = false;
+		deleteButton.disabled = true;
 	}
+}
+
+//get array from local storage
+const loadLocalStorage = () => {
+	const storedList = storage.readFromLocalStorage("favorites")
+
+	//if array is full
+	if (Array.isArray(storedList)) {
+		favoriteIds = storedList
+
+	}
+	//if empty
+	else {
+		favoriteIds = [];
+	}
+
 }
 
 //BUTTON EVENTS
@@ -125,9 +142,9 @@ favoriteButton.addEventListener("click", () => {
 	refreshFavorites();
 	changeButtonStates();
 
-	//console.log("array: " + favoriteIds)
+	storage.writeToLocalStorage("favorites", favoriteIds);
 
-	
+
 })
 //delete button
 const deleteButton = document.querySelector("#btn-delete");
@@ -144,12 +161,13 @@ deleteButton.addEventListener("click", () => {
 	refreshFavorites();
 	changeButtonStates();
 
-	//console.log("array: " + favoriteIds)
-	
+	storage.writeToLocalStorage("favorites", favoriteIds);
+
 
 })
 
 const init = () => {
+	loadLocalStorage();
 	map.initMap(lnglatNYS);
 	ajax.downloadFile("data/parks.geojson", (str) => {
 		geojson = JSON.parse(str);

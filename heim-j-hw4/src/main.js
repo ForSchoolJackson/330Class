@@ -1,6 +1,7 @@
 import * as map from "./map.js";
 import * as ajax from "./ajax.js";
 import * as storage from "./storage.js";
+import * as admin from "./parks-viewer.js";
 
 // I. Variables & constants
 // NB - it's easy to get [longitude,latitude] coordinates with this tool: http://geojson.io/
@@ -144,6 +145,13 @@ favoriteButton.addEventListener("click", () => {
 
 	storage.writeToLocalStorage("favorites", favoriteIds);
 
+	const feature = getFeatureByID(currentId);
+	admin.writeFavNameData(feature.properties.title, currentId, 1);
+
+
+	
+
+	
 
 })
 //delete button
@@ -158,10 +166,15 @@ deleteButton.addEventListener("click", () => {
 
 		}
 	}
+
 	refreshFavorites();
 	changeButtonStates();
 
 	storage.writeToLocalStorage("favorites", favoriteIds);
+
+	const feature = getFeatureByID(currentId);
+	admin.writeFavNameData(feature.properties.title, currentId, -1);
+
 
 
 })

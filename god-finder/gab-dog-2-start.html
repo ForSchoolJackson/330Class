@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>GabDog</title>
+  <style>
+    *{
+      font-family: sans-serif;
+    }
+  </style>
+  <script type="module">
+
+// TODO: ADD YOUR imports and Firebase setup code HERE
+ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-app.js";
+    import { getDatabase, ref, set, push, onValue, increment, get, update } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAfmODQ8hgDyOscmVMuLgi9TeLhh_Ih-HE",
+      authDomain: "high-scores-cc815.firebaseapp.com",
+      projectId: "high-scores-cc815",
+      storageBucket: "high-scores-cc815.appspot.com",
+      messagingSenderId: "223223771805",
+      appId: "1:223223771805:web:74e37fdfa2c133ba83da74"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+
+    console.log(app); // make sure firebase is loaded
+
+
+// This is the "harder" way and not necessary for incrementing a counter
+// But this code is useful if you want to `get()` a value just once
+// and/or do "batch" updates of non-numeric values with `update()`
+const writeFavNameData = name => {
+  const db = getDatabase();
+  const favRef = ref(db, 'favorites/' + name);
+
+  // does it already exist?
+  // get will just look once
+  get(favRef).then(snapshot => {
+    let favorite;
+    if (snapshot.exists()) {
+      // if it's already in "favorites/" - update the number of likes
+      favorite = snapshot.val();
+      console.log("found - current values=",favorite);
+      const likes = favorite.likes + 1;
+      const newData = {
+        name,
+        likes
+      };
+      const updates = {};
+      updates['favorites/' + name] = newData;
+      update(ref(db), updates);
+    } else {
+      // if it does not exist, add to "mostFavorited/"
+      console.log(`No favorite of key='${name}' found`);
+      console.log("favorite=",favorite);
+      set(favRef, {
+        name,
+        likes: 1
+      });
+    }
+  }).catch((error) => {
+    console.error(error);
+  });
+}
+
+const favoritesChanged = (snapshot) => {
+  // TODO: clear #favoritesList
+  favoritesList.innerHTML = "";
+  snapshot.forEach(fav => {
+    const childKey = fav.key;
+    const childData = fav.val();
+    console.log(childKey,childData);
+    // TODO: update #favoritesList
+    favoritesList.innerHTML += `<li><b>${childData.name}</b> - Likes: ${childData.likes}</li>`;
+  });
+};
+
+const init = () => {
+  const db = getDatabase();
+  const favoritesRef = ref(db, 'favorites/');
+  onValue(favoritesRef,favoritesChanged);
+	
+  btnSubmit.onclick = () => {
+    writeFavNameData(nameField.value);
+  };
+};
+
+init();
+
+</script>
+</head>
+<body>
+  <h1>GabDog&trade;</h1>
+  <h3>We want to know - what's a good dog name?</h3>
+  <p>Name --> <input value="Rover" id="nameField"></p>
+  <button id="btnSubmit">Send Name to Server</button>
+  <hr>
+  <h3>Popular Names</h3>
+  <ol id="favoritesList"></ol>
+ </body>
+</html>

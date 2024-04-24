@@ -51,7 +51,7 @@ const showFeatureDetails = (id) => {
 	//console.log(`showFeatureDetails - id=${id}`);
 	const feature = getFeatureByID(id);
 	document.querySelector("#details-1").innerHTML = `Info for ${feature.properties.title}`;
-	document.querySelector("#details-2").innerHTML = `<b>Address: </b> ${feature.properties.address} <br> <b>Phone: </b> ${feature.properties.phone} <br> <b>Websire</b> ${feature.properties.url}`;
+	document.querySelector("#details-2").innerHTML = `<b>Address: </b> ${feature.properties.address} <br> <b>Phone: </b> ${feature.properties.phone} <br> <b>Website</b> <a href="${feature.properties.url}">${feature.properties.url}</a>`;
 	document.querySelector("#details-3").innerHTML = feature.properties.description
 
 	//show buttons
